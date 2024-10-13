@@ -39,15 +39,18 @@ import java.util.List;
 class Solution9 {
 
     public boolean possibleBipartition(int n, int[][] dislikes) {
-        int[] fa = new int[n + 1];
-        Arrays.fill(fa, -1);
-        List<Integer>[] g = new List[n + 1];
-        for (int i = 0; i < n; ++i) {
+        int[] fa = new int[n + 1];//初始化数组
+        Arrays.fill(fa, -1);//填充-1
+        List<Integer>[] g = new List[n + 1];//初始化列表g
+        for (int i = 0; i <= n; ++i) {
             g[i] = new ArrayList<Integer>();
-        }
-        for (int[] p : dislikes)
+        }//初始化双层列表g
+
+        for (int[] p : dislikes) {
             g[p[0]].add(p[1]);
             g[p[1]].add(p[0]);
+        }
+
         for (int i = 1; i <= n; ++i) {
             for (int j = 0; j < g[i].size(); ++j) {
                 unit(g[i].get(0), g[i].get(j), fa);
@@ -81,6 +84,6 @@ class Solution9 {
     }
 
     public int findFa(int x, int[] fa) {
-        return fa[x] > 0 ? x : (fa[x] = findFa(fa[x], fa));
+        return fa[x] < 0 ? x : (fa[x] = findFa(fa[x], fa));
     }
 }
